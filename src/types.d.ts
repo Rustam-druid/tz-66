@@ -9,8 +9,11 @@ export interface IFoodAppMutation {
   category:string;
   description:string;
 }
+
+
 export type ApiFood = Omit<IPagesAppMutation , 'id'>
 
 export interface ApiFoodCategory {
   [id: string]: IFoodApp;
 }
+

@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosApi from '../../axiosAPI.ts';
 import Spinner from '../../components/UI/Spinner/Spinner.tsx';
-import PagesForm from '../../components/PagesForm/PagesForm.tsx';
+import Form from '../../components/Form/Form.tsx';
 import { ApiFood } from '../../types';
 
-const NewPage = () => {
+const NewFood = () => {
   const [loading,setLoading]= useState(false);
   const navigate = useNavigate();
 
@@ -13,7 +13,7 @@ const NewPage = () => {
     try{
 
       setLoading(true);
-      await axiosApi.post('pages.json' , page);
+      await axiosApi.post('Food.json' , page);
       navigate('/');
 
     }catch(err){
@@ -26,9 +26,9 @@ const NewPage = () => {
 
   return (
     <div>
-      {loading ? <Spinner /> : <PagesForm addNewPage={addNewPage} />}
+      {loading ? <Spinner /> : <Form addNewPage={addNewPage} />}
     </div>
   );
 };
 
-export default NewPage;
+export default NewFood;

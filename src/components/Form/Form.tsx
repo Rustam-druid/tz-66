@@ -3,7 +3,7 @@ import { IFoodAppMutation } from '../../types';
 
 interface Props {
   addNewPage: (newPage: IFoodAppMutation) => void;
-  editPage?: IFoodAppMutation;
+  editMeal?: IFoodAppMutation;
   isEditing?:boolean;
 }
 
@@ -13,13 +13,13 @@ const initionState = {
   calories: 0,
 };
 
-const PagesForm: React.FC<Props> = ({addNewPage, editPage=initionState , isEditing=false}) => {
-  const [newFood,setNewFood] = useState<IFoodAppMutation>(editPage);
+const Form: React.FC<Props> = ({addNewPage, editMeal=initionState , isEditing=false}) => {
+  const [newFood,setNewFood] = useState<IFoodAppMutation>(editMeal);
 
   const changePageContent = (e:React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setNewFood(prevState => ({
       ...prevState,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.name === 'calories' ? parseFloat(e.target.value) : e.target.value,
     }));
   };
 
@@ -43,8 +43,8 @@ const onSubmit = (e: React.FormEvent) => {
   }
 };
   useEffect(() => {
-    setNewFood(editPage);
-  }, [editPage]);
+    setNewFood(editMeal);
+  }, [editMeal]);
 
   return (
     <form onSubmit={onSubmit} className='p-3'>
@@ -80,7 +80,7 @@ const onSubmit = (e: React.FormEvent) => {
       <div className="form-group mb-2">
         <label htmlFor='Content'>Content:</label>
         <input
-          type="text"
+          type="number"
           onChange={changePageContent}
           value={newFood.calories}
           id="calories"
@@ -95,4 +95,4 @@ const onSubmit = (e: React.FormEvent) => {
   );
 };
 
-export default PagesForm;
+export default Form;

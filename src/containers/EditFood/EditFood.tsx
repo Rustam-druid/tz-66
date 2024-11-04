@@ -1,20 +1,19 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { ApiFood } from '../../types';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axiosApi from '../../axiosAPI.ts';
 import Spinner from '../../components/UI/Spinner/Spinner.tsx';
-import PagesForm from '../../components/PagesForm/PagesForm.tsx';
+import Form from '../../components/Form/Form.tsx';
 
-const EditPage = () => {
-  const [page, setPage] = useState<ApiFood>();
+const EditFood = () => {
+  const [Meal, setMeal] = useState<ApiFood>();
   const [loading, setLoading] = useState<boolean>(false);
   const {id} = useParams();
-  const navigate = useNavigate();
 
   const getOnePAgeId = useCallback(async () => {
-    const response: { data: ApiFood } = await axiosApi(`pages/${id}.json`);
+    const response: { data: ApiFood } = await axiosApi(`Food/${id}.json`);
     if (response.data) {
-      setPage(response.data);
+      setMeal(response.data);
     }
   }, [id]);
 
@@ -22,11 +21,10 @@ const EditPage = () => {
     void getOnePAgeId();
   }, [getOnePAgeId]);
 
-  const addNewPage = async (page: ApiFood) => {
+  const addNewPage = async (Meal: ApiFood) => {
     try {
       setLoading(true);
-      await axiosApi.put(`pages/${id}.json`, page);
-      navigate('/');
+      await axiosApi.put(`Food/${id}.json`, Meal);
     } catch (err) {
       console.log(err);
     } finally {
@@ -36,9 +34,9 @@ const EditPage = () => {
 
   return (
     <div>
-      {loading ? <Spinner/> : <PagesForm addNewPage={addNewPage} editPage={page} isEditing={true}/>}
+      {loading ? <Spinner/> : <Form addNewPage={addNewPage} editMeal={Meal} isEditing={true}/>}
     </div>
   );
 };
 
-export default EditPage;
+export default EditFood;

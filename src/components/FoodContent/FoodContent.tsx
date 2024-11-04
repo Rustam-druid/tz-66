@@ -4,14 +4,14 @@ import { IFoodApp} from '../../types';
 
 interface Props {
   foodContent: IFoodApp[];
-  deletePage:(id:string) => void;
+  deleteMeal:(id:string) => void;
 }
 
-const FoodContent: React.FC<Props> = ({ foodContent , deletePage}) => {
+const FoodContent: React.FC<Props> = ({ foodContent , deleteMeal}) => {
   return (
     <>
       {foodContent.map((f) => (
-        <FoodItemContent key={f.id} food={f} onDeletePage  ={() => deletePage(f.id)}   />
+        <FoodItemContent key={f.id} food={f} onDeleteFood  ={() => deleteMeal(f.id)}   />
       ))}
     </>
   );

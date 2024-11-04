@@ -1,15 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { ApiFood, IFoodApp } from '../../types';
+import { ApiFoodCategory, IFoodApp } from '../../types';
 import FoodContent from '../../components/FoodContent/FoodContent.tsx';
 import Spinner from '../../components/UI/Spinner/Spinner.tsx';
 import axiosApi from '../../axiosAPI.ts';
-import { categories } from '../constants.ts';
 import { useParams } from 'react-router-dom';
+import TotalPrice from '../TotalPrice/TotalPrice.tsx';
 
+interface Props {
+  total: () => number;
+}
 
-const categoriesList = categories;
-
-const Home= () => {
+const Home:React.FC<Props>= ({total}) => {
   const {categoryId} = useParams();
   const [loading, setLoading] = useState(false);
   const [food, setFood] = useState<IFoodApp[]>([]);
@@ -18,23 +19,22 @@ const Home= () => {
     try{
       setLoading(true);
       const response = await axiosApi(
-        !categoryId ? 'pages.json' : `/pages.json?orderBy="category"&equalTo="${categoryId}"`);
+        !categoryId ? 'Food.json' : `/Food.json?orderBy="category"&equalTo="${categoryId}"`);
 
-      const pagesObj: ApiFood = response.data;
+      const FoodObj: ApiFoodCategory = response.data;
 
-      if (pagesObj === null){
+      if (FoodObj === null){
         setFood([]);
       }
 
-      if (pagesObj) {
-        const Pages = Object.keys(pagesObj).map(pageId => {
+      if (FoodObj) {
+        const Meal = Object.keys(FoodObj).map(FoodId => {
           return {
-            id: pageId,
-            ...pagesObj[pageId],
+            id: FoodId,
+            ...FoodObj[FoodId],
           };
         });
-        setFood(Pages);
-        console.log(Pages);
+        setFood(Meal);
       }
     }catch(error){
       console.log(error);
@@ -45,17 +45,9 @@ const Home= () => {
   },[categoryId]);
 
 
-
-  const getTitle = (categoryId: string) => {
-    const getClickCategory = categoriesList.filter(category => {
-      return category.id === categoryId;
-    });
-    return getClickCategory[0].title;
-  };
-
-  const deletePage = useCallback(async (id:string) => {
+  const deleteMeal = useCallback(async (id:string) => {
     try {
-      await axiosApi.delete(`pages/${id}.json`);
+      await axiosApi.delete(`Food/${id}.json`);
       await  fetchData();
     }catch (e) {
       console.error(e);
@@ -74,10 +66,10 @@ const Home= () => {
           <div className='row'>
 
             <div className="col-8">
-              <h2>{!categoryId ? 'all' : getTitle(categoryId)}</h2>
+              <h2>Total: {total()}  </h2>
               <div>
                 {food.length === 0 ? <p>no pages</p> : <>
-                  <FoodContent foodContent={food} deletePage={deletePage}/>
+                  <FoodContent foodContent={food} deleteMeal={deleteMeal}/>
                 </>
                 }
               </div>

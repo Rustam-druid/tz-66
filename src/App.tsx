@@ -3,16 +3,17 @@ import { Route, Routes } from 'react-router-dom';
 import axiosAPI from './axiosAPI.ts';
 import ToolBar from './components/ToolBar/ToolBar.tsx';
 import Home from './containers/Home/Home.tsx';
-import NewPage from './containers/NewPage/NewPage.tsx';
-import EditPage from './containers/EditPage/EditPage.tsx';
+import NewFood from './containers/NewFood/NewFood.tsx';
+import EditFood from './containers/EditFood/EditFood.tsx';
+import { IFoodApp } from './types';
 
 const App = () => {
-  const [food, setFood] = useState([]);
+  const [food, setFood] = useState<IFoodApp[]>([]);
 
 
   const fetchPages = useCallback (async () => {
     try {
-      const responsePages = await axiosAPI('pages.json');
+      const responsePages = await axiosAPI('Food.json');
 
       if (responsePages.data === null) {
         setFood([]);
@@ -37,6 +38,14 @@ const App = () => {
 
   }, [fetchPages ]);
 
+  const total = () => {
+     const Total = food.reduce((acc, item) => {
+      return acc + item.calories;
+    }, 0);
+     return Total;
+  };
+
+
 
   return (
     <>
@@ -47,10 +56,10 @@ const App = () => {
           {food
             ? <div className="row">
               <Routes>
-                <Route path='/' element={<Home/>}/>
+                <Route path='/' element={<Home total={total}/>}/>
                 <Route path='/pages/:categoryId' element={<Home/>}/>
-                <Route path='/editDish/:id' element={<EditPage/>}/>
-                <Route path='/newpage' element={<NewPage/>}/>
+                <Route path='/editDish/:id' element={<EditFood/>}/>
+                <Route path='/newpage' element={<NewFood/>}/>
               </Routes>
             </div>
            : null

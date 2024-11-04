@@ -6,7 +6,7 @@ const ToolBar = () => {
     <>
       <nav className="navbar navbar-expand-lg ">
         <div className="container">
-          <NavLink to="/"><span className="navbar-brand mb-0  fs-1">Pages</span></NavLink>
+          <NavLink to="/"><span className="navbar-brand mb-0  fs-1">Home</span></NavLink>
 
           <div className="ms-auto">
             <ul className="navbar-nav">
@@ -14,7 +14,7 @@ const ToolBar = () => {
                 <NavLink className="nav-link text-dark btn btn-primary "  to="/">Home</NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link btn text-dark btn-primary" to="/newpage">New Pages</NavLink>
+                <NavLink className="nav-link btn text-dark btn-primary" to="/newpage">add Meal</NavLink>
               </li>
             </ul>
           </div>

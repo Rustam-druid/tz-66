@@ -4,10 +4,10 @@ import { NavLink } from 'react-router-dom';
 
 interface Props {
   food: IFoodApp;
-  onDeletePage:React.MouseEventHandler<HTMLButtonElement>;
+  onDeleteFood:React.MouseEventHandler<HTMLButtonElement>;
 }
 
-const FoodItemContent: React.FC<Props> = ({ food, onDeletePage}) => {
+const FoodItemContent: React.FC<Props> = ({ food, onDeleteFood}) => {
 
   return (
     <div className="row  border border-dark mb-3 border-3 p-2 bg-light">
@@ -23,7 +23,7 @@ const FoodItemContent: React.FC<Props> = ({ food, onDeletePage}) => {
             <div
               className='row col-6 gap-3'>
               <NavLink className='btn btn-info' to={`/editDish/${food.id}`}>E</NavLink>
-              <button className='btn btn-danger' onClick={() => onDeletePage(food.id)}>d</button>
+              <button className='btn btn-danger' onClick={() => onDeleteFood(food.id)}>d</button>
             </div>
           </div>
 
