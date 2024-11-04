@@ -7,7 +7,7 @@ import NewPage from './containers/NewPage/NewPage.tsx';
 import EditPage from './containers/EditPage/EditPage.tsx';
 
 const App = () => {
-  const [pages, setPages] = useState([]);
+  const [food, setFood] = useState([]);
 
 
   const fetchPages = useCallback (async () => {
@@ -15,7 +15,7 @@ const App = () => {
       const responsePages = await axiosAPI('pages.json');
 
       if (responsePages.data === null) {
-        setPages([]);
+        setFood([]);
         return;
       };
 
@@ -25,7 +25,7 @@ const App = () => {
           id: Newkey
         };
       });
-      setPages(addNewKeyInObj);
+      setFood(addNewKeyInObj);
     } catch (e) {
       console.error(e);
     }
@@ -44,7 +44,7 @@ const App = () => {
         <div style={{backgroundColor: '#ccc', height: 60, borderBottom: '3px solid black'}}></div>
         <header><ToolBar/></header>
         <main>
-          {pages
+          {food
             ? <div className="row">
               <Routes>
                 <Route path='/' element={<Home/>}/>

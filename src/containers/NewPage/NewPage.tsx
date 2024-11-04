@@ -3,13 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import axiosApi from '../../axiosAPI.ts';
 import Spinner from '../../components/UI/Spinner/Spinner.tsx';
 import PagesForm from '../../components/PagesForm/PagesForm.tsx';
-import { ApiPage } from '../../types';
+import { ApiFood } from '../../types';
 
 const NewPage = () => {
   const [loading,setLoading]= useState(false);
   const navigate = useNavigate();
 
-  const addNewPage = async (page: ApiPage) => {
+  const addNewPage = async (page: ApiFood) => {
     try{
 
       setLoading(true);

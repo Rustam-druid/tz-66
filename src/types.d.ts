@@ -1,18 +1,16 @@
-export interface IPagesApp {
+export interface IFoodApp {
   id:string;
-  title:string;
-  Content:string;
   category:string;
-  price:number;
+  calories:number;
+  description:string;
 }
-export interface IPagesAppMutation {
-  title:string;
-  Content:string;
+export interface IFoodAppMutation {
+  calories:number;
   category:string;
-  price:number;
+  description:string;
 }
-export type ApiPage = Omit<IPagesAppMutation , 'id'>
+export type ApiFood = Omit<IPagesAppMutation , 'id'>
 
-export interface ApiPageCategory {
-  [id: string]: IPagesApp;
+export interface ApiFoodCategory {
+  [id: string]: IFoodApp;
 }

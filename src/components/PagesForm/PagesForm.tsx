@@ -1,24 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { IPagesAppMutation } from '../../types';
+import { IFoodAppMutation } from '../../types';
 
 interface Props {
-  addNewPage: (newPage: IPagesAppMutation) => void;
-  editPage?:IPagesAppMutation;
+  addNewPage: (newPage: IFoodAppMutation) => void;
+  editPage?: IFoodAppMutation;
   isEditing?:boolean;
 }
 
 const initionState = {
-  title:'',
-  Content: '',
+  description:'',
   category:'',
-  price: 0,
+  calories: 0,
 };
 
 const PagesForm: React.FC<Props> = ({addNewPage, editPage=initionState , isEditing=false}) => {
-  const [newPage,setNewPage] = useState<IPagesAppMutation>(editPage);
+  const [newFood,setNewFood] = useState<IFoodAppMutation>(editPage);
 
   const changePageContent = (e:React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setNewPage(prevState => ({
+    setNewFood(prevState => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
@@ -26,27 +25,25 @@ const PagesForm: React.FC<Props> = ({addNewPage, editPage=initionState , isEditi
 
 const onSubmit = (e: React.FormEvent) => {
   e.preventDefault();
-  if (newPage.title.trim().length === 0 || newPage.Content.trim().length === 0 || newPage.category.trim().length === 0) {
+  if (newFood.description.trim().length === 0 || newFood.category.trim().length === 0) {
     alert('Заполните поля');
   }else {
     addNewPage({
-      title: newPage.title,
-      Content: newPage.Content,
-      category: newPage.category,
-      price: newPage.price,
+      description: newFood.description,
+      category: newFood.category,
+      calories: newFood.calories,
     });
     if (!isEditing){
-      setNewPage({
-        title:'',
-        Content: '',
+      setNewFood({
+        description:'',
         category:'',
-        price: 0,
+        calories: 0,
       });
     };
   }
 };
   useEffect(() => {
-    setNewPage(editPage);
+    setNewFood(editPage);
   }, [editPage]);
 
   return (
@@ -55,13 +52,12 @@ const onSubmit = (e: React.FormEvent) => {
 
       <div className="form-group mb-2">
         <label htmlFor='category'>Category
-        <select onChange={changePageContent} name='category' value={newPage.category}>
+        <select onChange={changePageContent} name='category' value={newFood.category}>
           <option value='-'  disabled>Select the category</option>
-          <option value='bob' >bob</option>
-          <option value='tree' >tree</option>
-          <option value='bad' >bad</option>
-          <option  value='table' >table</option>
-          <option  value='motivation' >motivation</option>
+          <option value='Breakfast' >Breakfast</option>
+          <option value='Snack' >Snack</option>
+          <option value='Lunch' >Lunch</option>
+          <option  value='Dinner' >Dinner</option>
 
         </select>
 
@@ -70,13 +66,13 @@ const onSubmit = (e: React.FormEvent) => {
       </div>
 
       <div className="form-group mb-2">
-        <label htmlFor='title'>Title:</label>
+        <label htmlFor='title'>Food:</label>
         <input
           type="text"
           onChange={changePageContent}
-          value={newPage.title}
-          id="title"
-          name="title"
+          value={newFood.description}
+          id="description"
+          name="description"
           className="form-control"
         />
       </div>
@@ -86,20 +82,9 @@ const onSubmit = (e: React.FormEvent) => {
         <input
           type="text"
           onChange={changePageContent}
-          value={newPage.Content}
-          id="Content"
-          name="Content"
-          className="form-control"
-        />
-      </div>
-      <div className="form-group mb-2">
-        <label htmlFor='Content'>price:</label>
-        <input
-          type="text"
-          onChange={changePageContent}
-          value={newPage.price}
-          id="price"
-          name="price"
+          value={newFood.calories}
+          id="calories"
+          name="calories"
           className="form-control"
         />
       </div>

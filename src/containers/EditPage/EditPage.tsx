@@ -1,18 +1,18 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { ApiPage } from '../../types';
+import { ApiFood } from '../../types';
 import { useNavigate, useParams } from 'react-router-dom';
 import axiosApi from '../../axiosAPI.ts';
 import Spinner from '../../components/UI/Spinner/Spinner.tsx';
 import PagesForm from '../../components/PagesForm/PagesForm.tsx';
 
 const EditPage = () => {
-  const [page, setPage] = useState<ApiPage>();
+  const [page, setPage] = useState<ApiFood>();
   const [loading, setLoading] = useState<boolean>(false);
   const {id} = useParams();
   const navigate = useNavigate();
 
   const getOnePAgeId = useCallback(async () => {
-    const response: { data: ApiPage } = await axiosApi(`pages/${id}.json`);
+    const response: { data: ApiFood } = await axiosApi(`pages/${id}.json`);
     if (response.data) {
       setPage(response.data);
     }
@@ -22,7 +22,7 @@ const EditPage = () => {
     void getOnePAgeId();
   }, [getOnePAgeId]);
 
-  const addNewPage = async (page: ApiPage) => {
+  const addNewPage = async (page: ApiFood) => {
     try {
       setLoading(true);
       await axiosApi.put(`pages/${id}.json`, page);

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { ApiPage, ApiPageCategory, IPagesApp } from '../../types';
-import PagesContent from '../../components/PagesContent/PagesContent.tsx';
+import { ApiFood, IFoodApp } from '../../types';
+import FoodContent from '../../components/FoodContent/FoodContent.tsx';
 import Spinner from '../../components/UI/Spinner/Spinner.tsx';
 import axiosApi from '../../axiosAPI.ts';
 import { categories } from '../constants.ts';
@@ -12,7 +12,7 @@ const categoriesList = categories;
 const Home= () => {
   const {categoryId} = useParams();
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState<IPagesApp[]>([]);
+  const [food, setFood] = useState<IFoodApp[]>([]);
 
   const fetchData = useCallback(async () => {
     try{
@@ -20,10 +20,10 @@ const Home= () => {
       const response = await axiosApi(
         !categoryId ? 'pages.json' : `/pages.json?orderBy="category"&equalTo="${categoryId}"`);
 
-      const pagesObj: ApiPageCategory = response.data;
+      const pagesObj: ApiFood = response.data;
 
       if (pagesObj === null){
-        setPage([]);
+        setFood([]);
       }
 
       if (pagesObj) {
@@ -33,7 +33,7 @@ const Home= () => {
             ...pagesObj[pageId],
           };
         });
-        setPage(Pages);
+        setFood(Pages);
         console.log(Pages);
       }
     }catch(error){
@@ -76,8 +76,8 @@ const Home= () => {
             <div className="col-8">
               <h2>{!categoryId ? 'all' : getTitle(categoryId)}</h2>
               <div>
-                {page.length === 0 ? <p>no pages</p> : <>
-                  <PagesContent pages={page} deletePage={deletePage}/>
+                {food.length === 0 ? <p>no pages</p> : <>
+                  <FoodContent foodContent={food} deletePage={deletePage}/>
                 </>
                 }
               </div>
