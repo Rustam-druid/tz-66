@@ -32,11 +32,7 @@ const App = () => {
     }
   }, []);
 
-  useEffect(() => {
 
-    void fetchPages();
-
-  }, [fetchPages ]);
 
   const total = () => {
      const Total = food.reduce((acc, item) => {
@@ -45,7 +41,12 @@ const App = () => {
      return Total;
   };
 
+  useEffect(() => {
 
+    void fetchPages();
+    void total();
+
+  }, [fetchPages, total]);
 
   return (
     <>
