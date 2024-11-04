@@ -1,9 +1,7 @@
 
 export const categories = [
-{title: 'bob' , id: 'bob'},
-{title: 'tree' , id: 'tree'},
-{title: 'bad' , id: 'bad'},
-{title: 'table' , id: 'table'},
-{title: 'motivation' , id: 'motivation'},
+{title: 'Breakfast' , id: 'Breakfast'},
+{title: 'Snack' , id: 'Snack'},
+{title: 'Lunch' , id: 'Lunch'},
+{title: 'Dinner' , id: 'Dinner'},
 ];
-
